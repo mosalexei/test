@@ -1,0 +1,12 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - name: Download and Unpack wordpress
+      unarchive:
+       src: https://wordpress.org/latest.tar.gz
+       dest: /var/www/wordpress/
+       remote_src: yes
+

@@ -1,0 +1,7 @@
+---
+mysql:
+  root: root
+  database: wordpress
+  user: wordpress
+  password: wordpress
+  privileges: wordpress.*:ALL

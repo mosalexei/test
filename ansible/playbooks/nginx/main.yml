@@ -1,0 +1,33 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - name: Add nginx repo 
+      copy:
+       src: files/nginx.repo
+       dest: /etc/yum.repos.d/
+    - name: Install nginx
+      yum:
+       name: nginx
+       state: present
+      notify: Start nginx
+    - name: Create web directory
+      file:
+       path: /var/www
+       state: directory
+       mode: 0755
+       owner: nginx
+       group: nginx
+    - name: Create directory for wordpress
+      file:
+       path: /var/www/wordpress
+       state: directory
+       mode: 0755
+       owner: nginx
+       group: nginx
+  handlers:
+     - name: Start nginx
+       action: service name=nginx state=started
+

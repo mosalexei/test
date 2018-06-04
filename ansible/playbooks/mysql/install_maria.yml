@@ -1,0 +1,23 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - include_vars: vars/database.yml
+    - name: Install MySQL
+      yum: pkg={{ item }} state=latest
+      with_items:
+        - mariadb-server
+        - mariadb-server
+        - MySQL-python
+      notify: Start DB
+    - name: Set root password
+      mysql_user:
+       name: root
+       password: '{{ mysql.root }}'
+       priv: '*.*:ALL'
+  handlers:
+     - name: Start DB
+       action: service name=mariadb state=started
+

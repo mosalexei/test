@@ -1,0 +1,23 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - include_vars: vars/php.yml
+    - name: Install PHP-FPM
+      yum: pkg={{ item }} state=latest
+      with_items:
+        - php
+        - php-fpm
+        - php-mysql
+      notify: Start PHP-FPM
+    - name: Set root password
+      mysql_user:
+       name: root
+       password: '{{ mysql.root }}'
+       priv: '*.*:ALL'
+  handlers:
+     - name: Start PHP-FPM
+       action: service name=php-fpm state=started
+

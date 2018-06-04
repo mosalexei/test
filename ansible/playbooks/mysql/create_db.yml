@@ -1,0 +1,18 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - include_vars: vars/database.yml
+    - name: Create database
+      mysql_db:
+       name: '{{ mysql.database }}'
+       state: present
+    - name: Create DB user
+      mysql_user:
+       name: '{{ mysql.user }}'
+       password: '{{ mysql.password }}'
+       priv: '{{ mysql.privileges }}'
+       state: present
+
