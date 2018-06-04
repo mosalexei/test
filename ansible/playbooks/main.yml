@@ -1,0 +1,8 @@
+---
+ - include: mysql/install_maria.yml
+ - include: nginx/install_nginx.yml
+ - include: php/install_php.yml
+ - include: mysql/create_db.yml
+ - include: nginx/create_config_webhost.yml
+ - include: wordpress/wordpress.yml
+ - include: wordpress/change_settings.yml
