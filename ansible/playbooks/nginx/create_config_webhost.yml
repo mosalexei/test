@@ -1,0 +1,15 @@
+--- #
+- hosts: localhost
+  connection: ssh  
+  user: ansible
+  become: yes
+  tasks:
+    - name: Copy config for webhost 
+      copy:
+       src: files/wordpress.conf
+       dest: /etc/nginx/conf.d/
+      notify: Reload nginx
+  handlers:
+     - name: Reload nginx
+       action: service name=nginx state=reloaded
+

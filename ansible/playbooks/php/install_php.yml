@@ -4,20 +4,29 @@
   user: ansible
   become: yes
   tasks:
-    - include_vars: vars/php.yml
+#    - include_vars: vars/php.yml
     - name: Install PHP-FPM
       yum: pkg={{ item }} state=latest
       with_items:
         - php
         - php-fpm
         - php-mysql
+        - php-cli
+        - php-mcrypt
+        - php-json
       notify: Start PHP-FPM
-    - name: Set root password
-      mysql_user:
-       name: root
-       password: '{{ mysql.root }}'
-       priv: '*.*:ALL'
+    - name: Change settings in php config
+      lineinfile: dest=/etc/php.ini regexp='^(.*)short_open_tag' line=short_open_tag=on
+    - name: Change settings in php config for user
+      lineinfile: dest=/etc/php-fpm.d/www.conf regexp='^(.*)listen.owner=' line=listen.owner=nginx
+    - name: Change settings in php config for group
+      lineinfile: dest=/etc/php-fpm.d/www.conf regexp='^(.*)listen.group=' line=listen.group=nginx
+      notify: Restart PHP-FPM
+      notify: Restart Nginx
   handlers:
      - name: Start PHP-FPM
        action: service name=php-fpm state=started
-
+     - name: Restart PHP-FPM
+       action: service name=php-fpm state=restarted
+     - name: Restart Nginx
+       action: service name=nginx state=restarted

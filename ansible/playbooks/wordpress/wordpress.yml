@@ -7,6 +7,6 @@
     - name: Download and Unpack wordpress
       unarchive:
        src: https://wordpress.org/latest.tar.gz
-       dest: /var/www/wordpress/
+       dest: /var/www/
        remote_src: yes
 
