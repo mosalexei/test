@@ -1,0 +1,6 @@
+Hello from test branch
+<<<<<<< HEAD
+=======
+
+Hello from main branch
+>>>>>>> test
