@@ -1,0 +1,9 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  gather_facts: no
+  tasks:
+    - include: plays/install_telnet.yml
+    - name: Verify
+      raw: yum list installed | grep telnet >> /home/user/uptime.log

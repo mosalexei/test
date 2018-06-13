@@ -1,0 +1,12 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  tasks:
+    - name: Fail
+      command: /bin/false
+      ignore_errors: yes
+    - name: Install telnet
+      yum:
+        name: telnet
+        state: present

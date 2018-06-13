@@ -1,0 +1,11 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  tasks:
+    - name: Install apache2 if Debian
+      command: apt-get -y install apache2
+      when: ansible_os_family == "Debian"
+    - name: Install httpd if CentOS
+      command: yum install -y httpd
+      when: ansible_os_family == "RedHat" 

@@ -1,0 +1,16 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: latest
+    - name: Service status
+      shell: systemctl status httpd
+      register: result
+      until: result.stdout.find("active (running)") != -1
+      retries: 5
+      delay: 5

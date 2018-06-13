@@ -1,0 +1,16 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  tasks:
+    - name: Install packages
+      yum: pkg={{ item }} state=latest
+      with_items:
+        - telnet
+        - lynx
+      tags:
+        - packages
+    - name: Verify installed
+      raw: yum list installed | grep telnet >> /home/user/pkg.log
+      tags:
+        - log

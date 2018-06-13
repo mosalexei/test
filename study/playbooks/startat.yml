@@ -1,0 +1,12 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Install httpd
+      yum: pkg=httpd state=present
+    - name: install client software - telnet
+      yum: pkg=telnet state=latest
+    - name: install client software - lynx
+      yum: pkg=lynx state=latest

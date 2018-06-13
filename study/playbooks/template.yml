@@ -1,0 +1,12 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  gather_facts: yes
+  vars:
+    userName: user
+    userPassword: pass123
+    connectionType: SFTP
+  tasks:
+    - name: Install conf file
+      template: src=test.conf.j2 dest=/home/user/test.conf owner=user group=user mode=750

@@ -1,0 +1,16 @@
+---
+- hosts: remote
+  user: user
+  become: yes
+  vars:
+    playbook_version: 0.01b
+  vars_prompt:
+    - name: pkgtoinstall
+      promt: Install which package?
+      default: telnet
+      private: no
+  tasks:
+    - name: Install pkg
+      yum: 
+        name: "{{ pkgtoinstall }}"
+        state: present
